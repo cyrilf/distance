@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  div#mobile
+    div#wrapper
+      div#header
+        h1#app-title.font-effect-anaglyph Distance
+      div#instruction Just move your phone now ;)
+
+      p#error
+
+block view-script
+  script(src='/js/mobile/deviceorientationmanager.js', type='text/javascript')
+  script(src='/js/mobile.js', type='text/javascript')

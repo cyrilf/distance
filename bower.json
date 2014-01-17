@@ -1,0 +1,19 @@
+{
+  "name": "Distance",
+  "description": "Interact with your computer from your phone",
+  "version": "0.0.1",
+  "homepage": "https://github.com/cyrilf/distance",
+  "authors": [
+    "Cyril F <cyrilf7x@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "lodash": "~2.4.1"
+  }
+}

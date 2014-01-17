@@ -1,0 +1,6 @@
+*.local
+*.sublime-*
+node_modules
+*.local
+public/vendor
+*~

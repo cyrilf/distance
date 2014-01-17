@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: rgba(189, 195, 199,1.0);
+  color: rgba(236, 240, 241,1.0);
+  font-family: 'Open Sans', sans-serif;
+}
+
+a, a:link, a:visited, a:active {
+  color: rgba(39, 174, 96,1.0);
+}
+
+a:hover {
+  color: rgba(22, 160, 133,1.0);
+}
+
+#wrapper {
+  margin: auto;
+  width: 100%;
+  text-align: center;
+}
+
+#mainCanvas {
+  margin: auto;
+}
+
+#error {
+  color: rgba(192, 57, 43,1.0);
+}
+
+#header {
+  margin: auto;
+  margin-top: 3px;
+  width: 70%;
+}
+
+#header h1 {
+  float: left;
+  margin: 0;
+}
+
+#header #navigate-to {
+  display: inline-block;
+  margin-top: 14px;
+  visibility: hidden;
+}
+
+#wrapper #info-intro {
+  margin: 0 auto;
+  margin-top: 10%;
+  width: 60%;
+  height: 20%;
+  font-size: 50px;
+}
+
+/**
+ * MOBILE
+ */
+#mobile {
+  font-size: 55px;
+  margin-top: 10%;
+}
+
+#mobile #header {
+  width: 50%;
+}
+
+#mobile #header h1 {
+  float: none;
+}
+
+#mobile #instruction {
+  margin-top: 10%;
+  font-size: 125px;
+}
