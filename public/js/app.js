@@ -10,7 +10,7 @@ var roomURL = util.ADDRESS + ':' + util.PORT + '/mobile?id=' + roomId;
 // We display the url
 var gameLinks = document.getElementsByClassName('gameLink');
 for(var i = 0, l = gameLinks.length; i < l; i++) {
-  gameLinks[i].setAttribute('href', roomURL);
+  gameLinks[i].setAttribute('href', 'http://' + roomURL);
   gameLinks[i].innerHTML = ' ' + roomURL;
 }
 
