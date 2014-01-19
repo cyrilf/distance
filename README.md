@@ -4,7 +4,7 @@
 
 ## Requirements
 
-- [nodeJs](http://nodejs.org) installed on your computer.
+- [Node.js](http://nodejs.org) installed on your computer
 
 ## Steps
 
@@ -12,7 +12,7 @@
 
     git clone https://github.com/cyrilf/distance.git ; cd distance
 
-###2 - Install the dependencies.
+###2 - Install the dependencies
  
     [sudo] npm install -d
 
@@ -20,7 +20,7 @@
  
     node app.js
 
-##3 - Enjoy :)
-    Your game is ready and wait for you at localhost:2377
+###4 - Enjoy :)
+    Distance is ready and wait for you at localhost:2377
 
 [Cyril F - Web developer](http://cyrilf.com)

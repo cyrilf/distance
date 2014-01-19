@@ -4,9 +4,6 @@ module.exports = function(grunt) {
    * CONFIGURATION
    */
   grunt.initConfig({
-
-    pkg: grunt.file.readJSON('package.json'),
-
     jshint: {
       options: {
         jshintrc: '.jshintrc'

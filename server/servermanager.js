@@ -1,5 +1,6 @@
 var express       = require('express');
 var socketio      = require('socket.io');
+var path          = require('path');
 var socketManager = require('./socketmanager');
 var routeManager  = require('./routemanager');
 
@@ -19,6 +20,9 @@ var serverManager = {
       app.use(app.router);
       app.set('views', __dirname + '/../views');
       app.set('view engine', 'jade');
+      app.get('/js/lodash.min.js', function(req,res) {
+        res.sendfile(path.join(__dirname + '/..', 'node_modules/lodash/dist/lodash.min.js'));
+      });
       routeManager.initRoutes(app);
     });
 
