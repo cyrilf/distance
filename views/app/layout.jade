@@ -1,3 +1,7 @@
+- distance.NAME    = distance.NAME || 'Distance'
+- distance.ADDRESS = distance.ADDRESS || 'address'
+- distance.PORT    = distance.PORT || 'port'
+
 doctype html
 html
   head
@@ -14,4 +18,7 @@ html
     script(src='/js/lodash.min.js', type='text/javascript')
     script(src='/js/util/errormessage.js', type='text/javascript')
     script(src='/js/util/util.js', type='text/javascript')
+    script(type='text/javascript').
+      util.ADDRESS = '#{distance.ADDRESS}'
+      util.PORT    = #{distance.PORT}
     block view-script

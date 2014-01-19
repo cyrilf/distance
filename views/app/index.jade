@@ -3,7 +3,8 @@ extends layout
 block content
   div#wrapper
     div#header
-      h1#app-title Distance
+      h1#app-title
+        = distance.NAME
       div#navigate-to
         | Navigate to
         a(href="http://localhost:2377/", class="gameLink") wait for the link

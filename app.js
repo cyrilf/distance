@@ -19,8 +19,9 @@ var express = require('express'),
     app     = express(),
     server  = require('http').createServer(app);
 
+var NAME          = 'Distance';
 var PORT          = process.env.PORT || 2377;
 var serverManager = require('./server/servermanager');
 
-serverManager.configure(app);
-serverManager.run(server, PORT);
+serverManager.configure(app, NAME, PORT);
+serverManager.run(server, NAME, PORT);

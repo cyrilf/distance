@@ -3,9 +3,10 @@
  * @type {Object}
  */
 var util = {
-  // TODO: Find a way to retrieve it from server
-  BASE_URL : 'http://192.168.1.3',
-  PORT     : '2377',
+  // Server address
+  ADDRESS  : null,
+  // Server port
+  PORT     : null,
   /**
    * Generate a randomn id
    * @param  {Int}    length Length of the id

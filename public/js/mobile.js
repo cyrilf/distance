@@ -1,7 +1,7 @@
 // This file relies on ./mobile files
 
 // Connect to socketio
-var socket = io.connect(util.BASE_URL);
+var socket = io.connect(util.ADDRESS);
 
 // Retrieve the rommId from URL
 var roomId = util.getUrlVars().id;

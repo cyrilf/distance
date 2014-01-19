@@ -1,8 +1,9 @@
-var express       = require('express');
-var socketio      = require('socket.io');
-var path          = require('path');
-var socketManager = require('./socketmanager');
-var routeManager  = require('./routemanager');
+var express         = require('express'),
+    socketio        = require('socket.io'),
+    path            = require('path'),
+    socketManager   = require('./socketmanager'),
+    routeManager    = require('./routemanager'),
+    utilServer      = require('./utilserver');
 
 /**
  * Usefull methods for the server to work.
@@ -10,19 +11,35 @@ var routeManager  = require('./routemanager');
 var serverManager = {
   /**
    * Configure the server with some default options
-   * @param  {Object}   app the server himself
+   * @param  {Object}   app  the server himself
+   * @param  {String}   NAME   Name of the app
+   * @param  {Number}   PORT port number
    */
-  configure: function(app) {
+  configure: function(app, NAME, PORT) {
+    var lowerCaseName = NAME.toLowerCase();
+
     app.configure(function() {
+      app.set('NAME', NAME);
+
       app.use(express.json());
       app.use(express.urlencoded());
       app.use(express.methodOverride());
-      app.use(app.router);
+      // Set the view folder and engine
       app.set('views', __dirname + '/../views');
       app.set('view engine', 'jade');
+      // Define variables
+      app.set(lowerCaseName + '.ADDRESS', utilServer.getIP());
+      app.set(lowerCaseName + '.PORT', PORT);
+      // Use it as a middleware to define default vars
+      utilServer.app = app;
+      app.use(utilServer.middleware);
+
+      // Serve this static file
       app.get('/js/lodash.min.js', function(req,res) {
         res.sendfile(path.join(__dirname + '/..', 'node_modules/lodash/dist/lodash.min.js'));
       });
+
+      app.use(app.router);
       routeManager.initRoutes(app);
     });
 
@@ -44,16 +61,17 @@ var serverManager = {
    *   - Server start listenning on PORT
    *   - Initialization of the socket events
    * @param  {Object} server server instance
+   * @param  {String} NAME   Name of the app
    * @param  {Number} PORT   Port number
    */
-  run: function(server, PORT) {
+  run: function(server, NAME, PORT) {
     var io = socketio.listen(server);
     server.listen(PORT);
 
     io.set('log level', 0);
     io.sockets.on('connection', socketManager.onSocketConnection);
 
-    console.log('Open your browser at localhost://' + PORT + ' and enjoy the distance experience!');
+    console.log('Open your browser at localhost://' + PORT + ' and enjoy the ' + NAME + ' experience!');
   }
 };
 
