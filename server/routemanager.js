@@ -10,13 +10,27 @@ var app = function(req, res, next) {
 };
 
 var mobile = function(req, res, next) {
-  return res.render('app/mobile');
+  var roomId = req.params.roomId;
+
+  if(roomId === 'favicon.ico') {
+    return next();
+  }
+
+  var roomIdIsValid = true;
+  if(roomId === undefined || ! _.isString(roomId) ||roomId.length !== 5) {
+    roomIdIsValid = false;
+  }
+
+  return res.render('app/mobile', {
+    roomId: roomId,
+    roomIdIsValid: roomIdIsValid
+  });
 };
 
 var routes = {
-  '/':       home,
-  '/app':    app,
-  '/mobile': mobile
+  '/':        home,
+  '/app':     app,
+  '/:roomId': mobile
 };
 
 /**

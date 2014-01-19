@@ -26,10 +26,11 @@ var utilServer = {
     var appNameLowerCase = appName.toLowerCase();
 
     var defaultVariables               = {};
-    defaultVariables[appNameLowerCase] = {};
-    defaultVariables[appNameLowerCase].NAME    = appName;
-    defaultVariables[appNameLowerCase].ADDRESS = utilServer.app.get(appNameLowerCase + '.ADDRESS');
-    defaultVariables[appNameLowerCase].PORT    = utilServer.app.get(appNameLowerCase + '.PORT');
+    defaultVariables[appNameLowerCase] = {
+      NAME: appName,
+      ADDRESS: utilServer.app.get(appNameLowerCase + '.ADDRESS'),
+      PORT: utilServer.app.get(appNameLowerCase + '.PORT')
+    };
 
     res.render = function(view, variables, cb) {
       variables = variables || {};

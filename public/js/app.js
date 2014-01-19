@@ -5,7 +5,7 @@ var socket = io.connect(util.ADDRESS);
 var roomId = util.generateId();
 socket.emit('newRoom', roomId);
 
-var roomURL = util.ADDRESS + ':' + util.PORT + '/mobile?id=' + roomId;
+var roomURL = util.ADDRESS + ':' + util.PORT + '/' + roomId;
 
 // We display the url
 var gameLinks = document.getElementsByClassName('gameLink');
