@@ -15,7 +15,7 @@ var deviceOrientationManager = {
         var tiltFB       = -eventData.beta;
         var direction    = eventData.alpha;
 
-        self.emit(tiltLR, tiltFB, direction);
+        self.emit(tiltLR, tiltFB, direction, socket);
       }, false);
     } else if(window.OrientationEvent) {
       window.addEventListener('MozOrientation', function(eventData) {
@@ -23,7 +23,7 @@ var deviceOrientationManager = {
         var tiltFB       = -eventData.y * -90;
         var direction    = eventData.z;
 
-        self.emit(tiltLR, tiltFB, direction);
+        self.emit(tiltLR, tiltFB, direction, socket);
       }, false);
     } else {
       errorMessage.write('Not supported on your device or browser.  Sorry.');
@@ -32,11 +32,12 @@ var deviceOrientationManager = {
 
   /**
    * Send updated position data
-   * @param  {[type]} tiltLR    Tilt left to right
-   * @param  {[type]} tiltFB    Tilt front to back
+   * @param  {Number} tiltLR    Tilt left to right
+   * @param  {Number} tiltFB    Tilt front to back
    * @param  {[type]} direction Direction
+   * @param  {Object} socket    Socket
    */
-  emit: function(tiltLR, tiltFB, direction) {
+  emit: function(tiltLR, tiltFB, direction, socket) {
     socket.emit('newPosition', { tiltLR: Math.round(tiltLR), tiltFB: Math.round(tiltFB), direction: Math.round(direction) }, function(err) {
       if(err) {
         errorMessage.write(err.message);

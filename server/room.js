@@ -102,6 +102,32 @@ var roomManager = {
     var roomFound = this.rooms[roomIndexFound];
 
     return fn(null, roomFound);
+  },
+
+  /**
+   * Object to manage the roomId
+   * @type {Object}
+   */
+  roomId: {
+    /**
+     * Generate a unique room id
+     * @param  {Int}      length the room id length
+     * @param  {Function} fn     callback
+     */
+    generate: function(length, fn) {
+      length            = length || 5;
+      var allowed       = 'abcdefghijklmnopqrstuvwxyz0123456789',
+          allowedLength = allowed.length,
+          id            = [];
+
+      for(var i = 0; i < length; i++) {
+        id.push(allowed.charAt(Math.floor(Math.random() * allowedLength)));
+      }
+
+      id = id.join('');
+
+      fn(null, id);
+    }
   }
 };
 

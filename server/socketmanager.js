@@ -35,13 +35,21 @@ var socketManager = {
 
   /**
    * New room creation
-   * @param  {String} roomId Unique identifier for the room
+   * @param  {Function} fn callback
    */
-  newRoom: function(roomId) {
+  newRoom: function(fn) {
     var socket = this;
-    roomManager.addRoom(new Room(roomId, this));
-    socket.set('roomId', roomId);
-    socket.set('isRoom', true);
+    roomManager.roomId.generate(5, function roomIdGenerated(err, roomId) {
+      if(err) {
+        return fn(err);
+      }
+
+      roomManager.addRoom(new Room(roomId, socket));
+      socket.set('roomId', roomId);
+      socket.set('isRoom', true);
+
+      fn(null, roomId);
+    });
   },
 
   /**
