@@ -1,6 +1,6 @@
 {
-  "name": "Distance",
-  "version": "0.0.3",
+  "name": "distance",
+  "version": "0.0.4",
   "author": "Cyril F <cyrilf7x@gmail.com>",
   "description": "Distance allows you to use your phone as a remote controller for your computer",
   "scripts": {

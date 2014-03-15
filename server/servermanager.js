@@ -60,11 +60,14 @@ var serverManager = {
    *   - Bind socket io to the server
    *   - Server start listenning on PORT
    *   - Initialization of the socket events
-   * @param  {Object} server server instance
+   * @param  {Object} app    express instance
+   * @param  {Object} server http server instance
    * @param  {String} NAME   Name of the app
    * @param  {Number} PORT   Port number
    */
-  run: function(server, NAME, PORT) {
+  run: function(app, server, NAME, PORT) {
+    this.configure(app, NAME, PORT);
+
     var io = socketio.listen(server);
     server.listen(PORT);
 

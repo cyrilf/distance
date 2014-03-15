@@ -23,5 +23,4 @@ var NAME          = 'Distance';
 var PORT          = process.env.PORT || 2377;
 var serverManager = require('./server/servermanager');
 
-serverManager.configure(app, NAME, PORT);
-serverManager.run(server, NAME, PORT);
+serverManager.run(app, server, NAME, PORT);
