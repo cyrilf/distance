@@ -1,10 +1,11 @@
 {
   "name": "distance",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "author": "Cyril F <cyrilf7x@gmail.com>",
   "description": "Distance allows you to use your phone as a remote controller for your computer",
-  "scripts": {
-    "start": "node app.js"
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "./lib"
   },
   "repository": {
     "type": "git",
