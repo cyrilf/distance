@@ -86,8 +86,8 @@ var Player = function(id, color) {
       smoothedLR    = 0,
       smoothedFB    = 0,
 
-      x = Game.CANVAS_WIDTH / 2,
-      y = Game.CANVAS_HEIGHT / 2,
+      x = game.ui.CANVAS_WIDTH / 2,
+      y = game.ui.CANVAS_HEIGHT / 2,
       size  = 100;
 
   color = color || playerManager.generateColor();
@@ -98,14 +98,14 @@ var Player = function(id, color) {
   var _keepPlayerIntoBounds = function(player) {
     if(player.x < player.size) {
       player.x = player.size;
-    } else if(player.x > Game.CANVAS_WIDTH - player.size) {
-      player.x = Game.CANVAS_WIDTH - player.size;
+    } else if(player.x > game.ui.CANVAS_WIDTH - player.size) {
+      player.x = game.ui.CANVAS_WIDTH - player.size;
     }
 
     if(player.y < player.size) {
       player.y = player.size;
-    } else if(player.y > Game.CANVAS_HEIGHT - player.size) {
-      player.y = Game.CANVAS_HEIGHT - player.size;
+    } else if(player.y > game.ui.CANVAS_HEIGHT - player.size) {
+      player.y = game.ui.CANVAS_HEIGHT - player.size;
     }
   };
 

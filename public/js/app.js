@@ -21,8 +21,8 @@ var newRoomCallback = function(err, roomId) {
 
     var isFirstUser = playerManager.players.length === 0;
     if(isFirstUser) {
-      Game.createCanvas();
-      Game.runLoop();
+      game.initUI();
+      game.runLoop();
     }
 
     playerManager.addPlayer(newPlayer);
@@ -33,7 +33,7 @@ var newRoomCallback = function(err, roomId) {
 
     var zeroPlayer = playerManager.players.length === 0;
     if(zeroPlayer) {
-      Game.reset();
+      game.reset();
     }
   });
 
