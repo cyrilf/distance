@@ -46,7 +46,9 @@ var stickerManager = {
    * @return {String} color
    */
   generateColor: function() {
-    return (this.colors.length > 0) ? this.colors.shift() : 'black';
+    var length = this.colors.length,
+        random = Math.floor(Math.random() * length);
+    return this.colors[random];
   },
 
   /**

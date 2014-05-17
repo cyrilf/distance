@@ -121,10 +121,11 @@ var game = {
     if(this.isStarted) {
       var collision = collisionManager.check(playerManager.players, stickerManager.stickers);
       if(collision && collision.type === 'sticker') {
+        var winner = this.manageScore(collision);
         stickerManager.remove(collision.sticker.id);
         stickerManager.newSticker();
         collision.player.size -= collision.player.size / 9;
-        return this.manageScore(collision);
+        return winner;
       }
     }
 
@@ -137,6 +138,11 @@ var game = {
    */
   manageScore : function(collision) {
     var value = collision.sticker.value;
+
+    // Collision with sticker of the same color = points * 2
+    if(collision.sticker.color === collision.player.color) {
+      value += value;
+    }
     collision.player.score += value;
     this.socket.emit('user:score', collision.player.id, collision.player.score);
     var scoreMaxReached = (collision.player.score >= this.scoreMax);
