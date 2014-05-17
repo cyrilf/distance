@@ -16,6 +16,9 @@ if(! roomIdIsValid) {
     body.style['background-color'] = color;
 
     socket.on('user:score', function(score) {
+      if (window.navigator.vibrate) {
+        window.navigator.vibrate([100]);
+      }
       var mobile       = document.getElementById('mobile'),
           instruction  = document.getElementById('instruction'),
           scoreElement = document.getElementById('score');
