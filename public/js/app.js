@@ -26,10 +26,19 @@ var newRoomCallback = function(err, roomId) {
     }
 
     playerManager.addPlayer(newPlayer);
+    var enoughPlayerToStart = playerManager.players.length >= game.minPlayers;
+    if(enoughPlayerToStart && ! game.isStarted) {
+      game.start();
+    }
   });
 
   socket.on('disconnectedUser', function(socketId) {
     playerManager.remove(socketId);
+
+    var notEnoughPlayer = playerManager.players.length < game.minPlayers;
+    if(notEnoughPlayer) {
+      game.stop();
+    }
 
     var zeroPlayer = playerManager.players.length === 0;
     if(zeroPlayer) {

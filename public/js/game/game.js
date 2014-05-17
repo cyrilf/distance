@@ -6,9 +6,9 @@
  * @type {Object}
  */
 var game = {
-  minPlayers    : 2,
-  isPlaying     : false,
   ui            : ui,
+  minPlayers    : 2,
+  isStarted     : false,
 
   /**
    * Create the canvas element and init the context 2d
@@ -34,8 +34,35 @@ var game = {
   drawPlayers : function() {
     var self = this;
     _(playerManager.players).each(function playerIterator(player) {
-      self.ui.draw(player);
+      self.ui.drawPlayer(player);
     });
+  },
+
+  /**
+   * Draw the stickers
+   */
+  drawStickers : function() {
+    var self = this;
+    _(stickerManager.stickers).each(function stickerIterator(sticker) {
+      self.ui.drawSticker(sticker);
+    });
+  },
+
+  /**
+   * Start a new game (random point to capture, score, ..)
+   */
+  start : function() {
+    this.isStarted = true;
+    stickerManager.newSticker();
+  },
+
+  /**
+   * Stop the game
+   */
+  stop : function() {
+    stickerManager.empty();
+    playerManager.resetScore();
+    this.isStarted = false;
   },
 
   /**
@@ -46,8 +73,38 @@ var game = {
    * (the player position is updated on a socket event)
    */
   runLoop : function() {
-    this.ui.clearCanvas();
-    this.drawPlayers();
+    this.manageCollision();
+    this.updateDisplay();
     requestAnimationFrame(this.runLoop.bind(this));
-  }
+  },
+
+  /**
+   * Update the game display on each game loop
+   */
+  updateDisplay : function() {
+    this.ui.clearCanvas();
+    this.drawStickers();
+    this.drawPlayers();
+  },
+
+  /**
+   * Manage the collisions (count score, bounce players, ..)
+   */
+  manageCollision : function() {
+    if(this.isStarted) {
+      var collision = collisionManager.check(playerManager.players, stickerManager.stickers);
+      if(collision && collision.type === 'sticker') {
+        this.manageScore(collision);
+      }
+    }
+  },
+
+  /**
+   * Manage the score
+   * @param  {Object} collision a collision details
+   */
+  manageScore : function(collision) {
+    var value = collision.sticker.value;
+    collision.player.score += value;
+  },
 };

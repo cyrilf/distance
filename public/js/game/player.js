@@ -72,6 +72,15 @@ var playerManager = {
     var playerFound = this.players[playerIndexFound];
 
     return fn(null, playerFound);
+  },
+
+  /**
+   * Reset the score for each players
+   */
+  resetScore: function() {
+    _(this.players).each(function playerIterator(player) {
+      player.score = 0;
+    });
   }
 };
 
@@ -85,6 +94,7 @@ var Player = function(id, color) {
       smoothingFB   = [],
       smoothedLR    = 0,
       smoothedFB    = 0,
+      score         = 0,
 
       x = game.ui.CANVAS_WIDTH / 2,
       y = game.ui.CANVAS_HEIGHT / 2,
@@ -163,6 +173,7 @@ var Player = function(id, color) {
     x              : x,
     y              : y,
     size           : size,
+    score          : score,
 
     updatePosition : updatePosition
   };
