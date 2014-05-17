@@ -7,12 +7,25 @@ var socket = io.connect(util.ADDRESS);
 if(! roomIdIsValid) {
   errorMessage.write('The room id is invalid. Check the url.');
 } else {
-  socket.emit('newMobile', roomId, function(err) {
+  socket.emit('user:new', roomId, function(err, color) {
     if(err) {
       errorMessage.write(err.message);
     }
 
-    socket.on('destroyedRoom', function() {
+    var body = document.body;
+    body.style['background-color'] = color;
+
+    socket.on('user:score', function(score) {
+      var mobile       = document.getElementById('mobile'),
+          instruction  = document.getElementById('instruction'),
+          scoreElement = document.getElementById('score');
+
+      instruction.style.display  = 'none';
+      scoreElement.style.display = 'block';
+      scoreElement.innerHTML     = score;
+    });
+
+    socket.on('room:destroy', function() {
       errorMessage.write('Room no longer available');
     });
 

@@ -38,7 +38,7 @@ var deviceOrientationManager = {
    * @param  {Object} socket    Socket
    */
   emit: function(tiltLR, tiltFB, direction, socket) {
-    socket.emit('newPosition', { tiltLR: Math.round(tiltLR), tiltFB: Math.round(tiltFB), direction: Math.round(direction) }, function(err) {
+    socket.emit('user:updatePosition', { tiltLR: Math.round(tiltLR), tiltFB: Math.round(tiltFB), direction: Math.round(direction) }, function(err) {
       if(err) {
         errorMessage.write(err.message);
       }

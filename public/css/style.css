@@ -58,7 +58,8 @@ a:hover {
  */
 #mobile {
   font-size: 55px;
-  margin-top: 10%;
+  font-size: 6vw;
+  margin-top: 5%;
 }
 
 #mobile #header {
@@ -72,4 +73,26 @@ a:hover {
 #mobile #instruction {
   margin-top: 10%;
   font-size: 125px;
+  font-size: 12.5vw;
+}
+
+#mobile #score {
+  display: none;
+  margin-top: -5%;
+  font-size: 250px;
+  font-size: 25vw;
+}
+
+@media screen and (min-height: 600px) {
+  #mobile #score {
+    font-size: 750px;
+    font-size: 80vw;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  #mobile #instruction {
+    font-size: 60px;
+    font-size: 6vw;
+  }
 }

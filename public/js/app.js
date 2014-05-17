@@ -1,6 +1,7 @@
 // This file relies on ./game files
 
 var socket = io.connect(util.ADDRESS);
+game.socket = socket;
 
 /**
  * newRoomCallback is a callback function when a new room has been successfully created
@@ -16,7 +17,7 @@ var newRoomCallback = function(err, roomId) {
     gameLinks[i].innerHTML = ' ' + roomURL;
   }
 
-  socket.on('newUser', function(socketId) {
+  socket.on('user:new', function(socketId, cb) {
     var newPlayer = new Player(socketId);
 
     var isFirstUser = playerManager.players.length === 0;
@@ -30,9 +31,11 @@ var newRoomCallback = function(err, roomId) {
     if(enoughPlayerToStart && ! game.isStarted) {
       game.start();
     }
+
+    cb(newPlayer.color);
   });
 
-  socket.on('disconnectedUser', function(socketId) {
+  socket.on('user:disconnect', function(socketId) {
     playerManager.remove(socketId, function playerRemoved(isRemoved) {
       if(isRemoved) {
         var notEnoughPlayer = playerManager.players.length < game.minPlayers;
@@ -48,7 +51,7 @@ var newRoomCallback = function(err, roomId) {
     });
   });
 
-  socket.on('updatePosition', function(socketId, data) {
+  socket.on('user:updatePosition', function(socketId, data) {
     playerManager.findBy({ id: socketId }, false, function playerFound(err, player) {
       if(! err) {
         player.updatePosition(data);
@@ -57,4 +60,4 @@ var newRoomCallback = function(err, roomId) {
   });
 };
 
-socket.emit('newRoom', newRoomCallback);
+socket.emit('room:new', newRoomCallback);

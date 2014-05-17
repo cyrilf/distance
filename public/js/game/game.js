@@ -138,6 +138,7 @@ var game = {
   manageScore : function(collision) {
     var value = collision.sticker.value;
     collision.player.score += value;
+    this.socket.emit('user:score', collision.player.id, collision.player.score);
     var scoreMaxReached = (collision.player.score >= this.scoreMax);
     if(scoreMaxReached) {
       return collision.player;
