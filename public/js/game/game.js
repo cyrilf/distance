@@ -95,6 +95,9 @@ var game = {
       var collision = collisionManager.check(playerManager.players, stickerManager.stickers);
       if(collision && collision.type === 'sticker') {
         this.manageScore(collision);
+        stickerManager.remove(collision.sticker.id);
+        stickerManager.newSticker();
+        collision.player.size -= collision.player.size / 9;
       }
     }
   },
@@ -106,5 +109,5 @@ var game = {
   manageScore : function(collision) {
     var value = collision.sticker.value;
     collision.player.score += value;
-  },
+  }
 };

@@ -71,12 +71,12 @@ var ui = {
     // UI shouldn't be aware of player structure and should only received the params value
     // (drawCircle should be called from outside rather than this one)
     this.drawCircle(player.x, player.y, player.size, player.color);
-    var fontSize = player.size / 3;
+    var fontSize = player.size / 1.5;
 
     this.ctx.lineCap   = 'round';
     this.ctx.font      = fontSize + 'px verdana';
     this.ctx.fillStyle = this.backgroundColor;
-    this.ctx.fillText(player.score, ((player.x) - (this.ctx.measureText(player.score).width / 2)), (player.y + fontSize / 2));
+    this.ctx.fillText(player.score, ((player.x) - (this.ctx.measureText(player.score).width / 2)), (player.y + fontSize / 3));
   },
 
   /**
