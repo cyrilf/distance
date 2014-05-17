@@ -8,6 +8,7 @@
 var game = {
   ui            : ui,
   minPlayers    : 2,
+  scoreMax      : 10,
   isStarted     : false,
 
   /**
@@ -20,10 +21,11 @@ var game = {
   },
 
   /**
-   * Reset the app display
+   * Hide the game
    */
-  reset : function() {
+  hide : function() {
     this.ui.hide();
+    this.stop();
     document.getElementById('navigate-to').style.visibility    = 'hidden';
     document.getElementById('info-intro').style.display        = 'block';
   },
@@ -32,9 +34,13 @@ var game = {
    * Draw the players
    */
   drawPlayers : function() {
-    var self = this;
+    var self = this,
+        withScore = false;
+    if(this.isStarted) {
+      withScore = true;
+    }
     _(playerManager.players).each(function playerIterator(player) {
-      self.ui.drawPlayer(player);
+      self.ui.drawPlayer(player, withScore);
     });
   },
 
@@ -57,11 +63,27 @@ var game = {
   },
 
   /**
+   * Reset the game
+   * @param  {Player} winner the winner
+   */
+  restart : function(winner) {
+    var self = this;
+
+    this.stop();
+
+    // We set 5 sec break ;)
+    setTimeout(function resetBreak() {
+      self.start();
+      self.runLoop();
+    }, 5000);
+  },
+
+  /**
    * Stop the game
    */
   stop : function() {
     stickerManager.empty();
-    playerManager.resetScore();
+    playerManager.reset();
     this.isStarted = false;
   },
 
@@ -73,9 +95,13 @@ var game = {
    * (the player position is updated on a socket event)
    */
   runLoop : function() {
-    this.manageCollision();
+    var winner = this.manageCollision();
     this.updateDisplay();
-    requestAnimationFrame(this.runLoop.bind(this));
+    if(winner) {
+      this.restart(winner);
+    } else {
+      requestAnimationFrame(this.runLoop.bind(this));
+    }
   },
 
   /**
@@ -89,17 +115,20 @@ var game = {
 
   /**
    * Manage the collisions (count score, bounce players, ..)
+   * * @return {Object} return the winner, null otherwise
    */
   manageCollision : function() {
     if(this.isStarted) {
       var collision = collisionManager.check(playerManager.players, stickerManager.stickers);
       if(collision && collision.type === 'sticker') {
-        this.manageScore(collision);
         stickerManager.remove(collision.sticker.id);
         stickerManager.newSticker();
         collision.player.size -= collision.player.size / 9;
+        return this.manageScore(collision);
       }
     }
+
+    return null;
   },
 
   /**
@@ -109,5 +138,11 @@ var game = {
   manageScore : function(collision) {
     var value = collision.sticker.value;
     collision.player.score += value;
+    var scoreMaxReached = (collision.player.score >= this.scoreMax);
+    if(scoreMaxReached) {
+      return collision.player;
+    }
+
+    return null;
   }
 };

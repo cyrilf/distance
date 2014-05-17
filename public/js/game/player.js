@@ -30,24 +30,30 @@ var playerManager = {
   /**
    * Remove a player
    * @param  {Id} socketId Unique identifier for the player
+   * @param  {Function} callback callback function
    */
-  remove: function(socketId) {
+  remove: function(socketId, callback) {
     var self = this;
 
     this.findBy({id: socketId}, true, function playerIndexFoundF(err, playerIndexFound) {
       if(err) {
         console.log('Player not found. It can\'t be destroyed..');
-        return;
+        return callback(false);
       }
 
-      var player = self.players[playerIndexFound];
-
-      if(player.color !== 'black') {
-        self.colors.unshift(player.color);
-      }
       if(playerIndexFound !== null) {
+
+        var player = self.players[playerIndexFound];
+
+        if(player.color !== 'black') {
+          self.colors.unshift(player.color);
+        }
+
         self.players.splice(playerIndexFound, 1);
+        return callback(true);
       }
+
+      return callback(false);
     });
   },
 
@@ -75,11 +81,12 @@ var playerManager = {
   },
 
   /**
-   * Reset the score for each players
+   * Reset the score/size for each players
    */
-  resetScore: function() {
+  reset: function() {
     _(this.players).each(function playerIterator(player) {
       player.score = 0;
+      player.size  = player.defaultSize;
     });
   }
 };
@@ -95,10 +102,10 @@ var Player = function(id, color) {
       smoothedLR    = 0,
       smoothedFB    = 0,
       score         = 0,
-
-      x = game.ui.CANVAS_WIDTH / 2,
-      y = game.ui.CANVAS_HEIGHT / 2,
-      size  = 100;
+      x             = game.ui.CANVAS_WIDTH / 2,
+      y             = game.ui.CANVAS_HEIGHT / 2,
+      size          = 100,
+      defaultSize   = 100;
 
   color = color || playerManager.generateColor();
 
@@ -173,6 +180,7 @@ var Player = function(id, color) {
     x              : x,
     y              : y,
     size           : size,
+    defaultSize    : defaultSize,
     score          : score,
 
     updatePosition : updatePosition

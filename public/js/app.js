@@ -33,17 +33,19 @@ var newRoomCallback = function(err, roomId) {
   });
 
   socket.on('disconnectedUser', function(socketId) {
-    playerManager.remove(socketId);
+    playerManager.remove(socketId, function playerRemoved(isRemoved) {
+      if(isRemoved) {
+        var notEnoughPlayer = playerManager.players.length < game.minPlayers;
+        if(notEnoughPlayer) {
+          game.stop();
+        }
 
-    var notEnoughPlayer = playerManager.players.length < game.minPlayers;
-    if(notEnoughPlayer) {
-      game.stop();
-    }
-
-    var zeroPlayer = playerManager.players.length === 0;
-    if(zeroPlayer) {
-      game.reset();
-    }
+        var zeroPlayer = playerManager.players.length === 0;
+        if(zeroPlayer) {
+          game.hide();
+        }
+      }
+    });
   });
 
   socket.on('updatePosition', function(socketId, data) {
