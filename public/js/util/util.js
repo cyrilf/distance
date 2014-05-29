@@ -7,35 +7,26 @@ var util = {
   ADDRESS  : null,
   // Server port
   PORT     : null,
+
   /**
-   * Generate a randomn id
-   * @param  {Int}    length Length of the id
-   * @return {String} id     The generated id
+   * Set the address
+   * If we're not in localhost then we display the hostname rather than the ip address
+   * @param {String} address
    */
-  generateId: function (length) {
-    length            = length || 5;
-    var allowed       = 'abcdefghijklmnopqrstuvwxyz0123456789',
-        allowedLength = allowed.length,
-        id            = '';
-
-    for(var i = 0; i < length; i++) {
-      id += allowed.charAt(Math.floor(Math.random() * allowedLength));
+  setAddress: function(address) {
+    var hostname = window.location.hostname;
+    if(hostname === 'localhost') {
+      this.ADDRESS = address;
+    } else {
+      this.ADDRESS = hostname;
     }
-
-    return id;
   },
 
   /**
-   * Return the vars from a url
-   * @return {Array} Array with vars and values associated
+   * Set the port
+   * @param {Int} port
    */
-  getUrlVars: function() {
-    var vars    = {};
-    var parts   = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-      vars[key] = value;
-    });
-
-    return vars;
+  setPort: function(port) {
+    this.PORT = port;
   }
 };
-
