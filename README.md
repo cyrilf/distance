@@ -18,7 +18,7 @@
 
 ###3 - Launch the server
  
-    node app.js
+    node distance.js
 
 ###4 - Enjoy :)
     Distance is ready and wait for you at localhost:2377
