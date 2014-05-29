@@ -59,6 +59,7 @@ var game = {
    */
   start : function() {
     this.isStarted = true;
+    this.socket.emit('game:new');
     stickerManager.newSticker();
   },
 
@@ -69,22 +70,26 @@ var game = {
   restart : function(winner) {
     var self = this;
 
-    this.stop();
+    this.stop('restart');
 
-    // We set 5 sec break ;)
+    // We set 3 sec break ;)
     setTimeout(function resetBreak() {
+      playerManager.reset();
       self.start();
       self.runLoop();
-    }, 5000);
+    }, 3000);
   },
 
   /**
    * Stop the game
+   * @param  {String} reason reason for calling the stop
    */
-  stop : function() {
-    stickerManager.empty();
-    playerManager.reset();
+  stop : function(reason) {
     this.isStarted = false;
+    stickerManager.empty();
+    if(reason !== 'restart') {
+      playerManager.reset();
+    }
   },
 
   /**
@@ -115,7 +120,7 @@ var game = {
 
   /**
    * Manage the collisions (count score, bounce players, ..)
-   * * @return {Object} return the winner, null otherwise
+   * @return {Object} return the winner, null otherwise
    */
   manageCollision : function() {
     if(this.isStarted) {

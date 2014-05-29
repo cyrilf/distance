@@ -1,39 +1,53 @@
 // This file relies on ./mobile files
 
-// Connect to socketio
-var socket = io.connect(util.ADDRESS);
+var mobile = {
+  socket: io.connect(util.ADDRESS),
+  deviceOrientationManager: deviceOrientationManager,
+  vibrator: vibrator,
 
-// Inform the server that a new mobile is connected
-if(! roomIdIsValid) {
-  errorMessage.write('The room id is invalid. Check the url.');
-} else {
-  socket.emit('user:new', roomId, function(err, color) {
+  scoreElement: document.getElementById('score'),
+
+  newUser: function(err, color) {
     if(err) {
       errorMessage.write(err.message);
     }
 
     var body = document.body;
     body.style['background-color'] = color;
+    console.log(this);
 
-    socket.on('user:score', function(score) {
-      vibrator.vibrate();
-      var mobile       = document.getElementById('mobile'),
-          instruction  = document.getElementById('instruction'),
-          scoreElement = document.getElementById('score');
+    this.socket.on('user:score', this.userUpdateScore.bind(this));
 
-      instruction.style.display  = 'none';
-      scoreElement.style.display = 'block';
-      scoreElement.innerHTML     = score;
-    });
+    this.socket.on('game:new', this.newGame.bind(this));
 
-    socket.on('room:destroy', function() {
+    this.socket.on('room:destroy', function() {
       errorMessage.write('Room no longer available');
     });
 
     // If no errors occured on the server, we start listenning to
     // the device orientation events
     if(! err) {
-      deviceOrientationManager.listen(socket);
+      this.deviceOrientationManager.listen(this.socket);
     }
-  });
+  },
+  userUpdateScore: function(score, vibration) {
+    this.vibrator.vibrate(vibration);
+    var mobile       = document.getElementById('mobile'),
+        instruction  = document.getElementById('instruction');
+
+    instruction.style.display  = 'none';
+    this.scoreElement.style.display = 'block';
+    this.scoreElement.innerHTML     = score;
+  },
+
+  newGame: function() {
+    this.scoreElement.innerHTML = 0;
+  }
+};
+
+// Inform the server that a new mobile is connected
+if(! roomIdIsValid) {
+  errorMessage.write('The room id is invalid. Check the url.');
+} else {
+  mobile.socket.emit('user:new', roomId, mobile.newUser.bind(mobile));
 }

@@ -27,7 +27,7 @@ var vibrator = {
    *             (i.e.: [200, 100, 200]) or [300, 10, 200, 100, 20])
    */
   vibrate: function(input) {
-    if(typeof(input) === 'undefined') {
+    if(typeof(input) === 'undefined' || input === null) {
       input = this.sequences.default;
     }
     if(this.isSupported()) {
