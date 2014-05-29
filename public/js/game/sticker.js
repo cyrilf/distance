@@ -47,7 +47,7 @@ var stickerManager = {
    */
   generateColor: function() {
     var length = this.colors.length,
-        random = Math.floor(Math.random() * length);
+        random = _.random(length - 1);
     return this.colors[random];
   },
 

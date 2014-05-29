@@ -24,7 +24,16 @@ var playerManager = {
    * @return {String} color
    */
   generateColor: function() {
-    return (this.colors.length > 0) ? this.colors.shift() : 'black';
+    var color;
+
+    if(this.colors.length > 0) {
+      color = this.colors[Math.floor(Math.random() * this.colors.length)];
+      this.colors = _.without(this.colors, color);
+    } else {
+      color = 'rgb(' + _.random(255) + ',' + _.random(255) + ',' + _.random(255) + ')';
+    }
+
+    return color;
   },
 
   /**
@@ -44,8 +53,10 @@ var playerManager = {
       if(playerIndexFound !== null) {
 
         var player = self.players[playerIndexFound];
+        // Default colors are rgba, others (generated randomly) are rgb only
+        var isDefaultColor = player.color.indexOf('rgba') > -1;
 
-        if(player.color !== 'black') {
+        if(isDefaultColor) {
           self.colors.unshift(player.color);
         }
 
