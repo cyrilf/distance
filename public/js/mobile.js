@@ -14,11 +14,11 @@ var mobile = {
 
     var body = document.body;
     body.style['background-color'] = color;
-    console.log(this);
 
     this.socket.on('user:score', this.userUpdateScore.bind(this));
 
     this.socket.on('game:new', this.newGame.bind(this));
+    this.socket.on('game:over', this.gameOver.bind(this));
 
     this.socket.on('room:destroy', function() {
       errorMessage.write('Room no longer available');
@@ -42,6 +42,17 @@ var mobile = {
 
   newGame: function() {
     this.scoreElement.innerHTML = 0;
+  },
+
+  gameOver: function(winnerId) {
+    // this path to sessionid seems weird..
+    if(this.socket.socket.sessionid === winnerId) {
+      this.scoreElement.innerHTML = 'WINNER!';
+      this.vibrator.vibrateWinner();
+    } else {
+      this.scoreElement.innerHTML = 'Looser..';
+      this.vibrator.vibrateLooser();
+    }
   }
 };
 

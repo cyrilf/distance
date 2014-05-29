@@ -49,6 +49,14 @@ var vibrator = {
     this.vibrate(this.sequences.long);
   },
 
+  vibrateWinner: function() {
+    this.vibrate([100, 100, 100, 100, 100, 100, 100, 100, 100, 100]);
+  },
+
+  vibrateLooser: function() {
+    this.vibrate([250, 100, 350]);
+  },
+
   /**
    * Stop all vibrations
    */

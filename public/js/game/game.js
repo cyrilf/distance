@@ -71,6 +71,7 @@ var game = {
     var self = this;
 
     this.stop('restart');
+    this.socket.emit('game:over', winner.id);
 
     // We set 3 sec break ;)
     setTimeout(function resetBreak() {
