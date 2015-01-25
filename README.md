@@ -1,6 +1,6 @@
 # Distance
 
-####Distance allows you to use your phone as a remote controller for your computer
+> Distance allows you to use your phone as a remote controller for your computer
 
 ## Requirements
 
@@ -8,19 +8,20 @@
 
 ## Steps
 
-###1 - Clone this repository
+1.  Clone this repository
 
-    git clone https://github.com/cyrilf/distance.git ; cd distance
+    `git clone https://github.com/cyrilf/distance.git ; cd distance`
 
-###2 - Install the dependencies
+2.  Install the dependencies
  
-    [sudo] npm install -d
+    `[sudo] npm install -d`
 
-###3 - Launch the server
+3.  Launch the server
  
-    node distance.js
+    `node distance.js`
 
-###4 - Enjoy :)
-    Distance is ready and wait for you at localhost:2377
+4.  Enjoy :)
 
-[Cyril F - Web developer](http://cyrilf.com)
+    Distance is ready, just follow the instructions
+
+[by Cyril F](http://cyrilf.com)
