@@ -1,7 +1,13 @@
 // This file relies on ./game files
 
 var socket = io.connect(util.ADDRESS);
+debugger;
 game.socket = socket;
+
+// Todo: handle the socket.io connection error
+socket.io.on('connect_error', function(err) {
+  console.log('Error connecting to server', err);
+});
 
 /**
  * newRoomCallback is a callback function when a new room has been successfully created
